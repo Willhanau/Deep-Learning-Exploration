@@ -2,7 +2,7 @@
 
 #docker image variables
 docker_repo='willhanau/tensorflow'
-docker_tag='cuda9.0-cudnn7.0.5-tf1.8-horovod'
+docker_tag='cuda9.0-cudnn7.0.5-tf1.8'
 pwd=$(pwd)
 workspace_mount="$pwd/Workspace"
 data_mount="/Data"
