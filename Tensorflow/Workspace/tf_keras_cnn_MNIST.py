@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow import keras
 import time
 
-batch_size = 512
+batch_size = 128
 num_classes = 10
 epochs = 12
 
@@ -44,7 +44,7 @@ print('')
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
-model = keras.Sequential()print('\n')
+model = keras.Sequential()
 model.add(keras.layers.Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
