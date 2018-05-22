@@ -10,7 +10,7 @@ from tensorflow import keras
 from tensorflow.python.keras.datasets import cifar10
 
 
-batch_size = 32
+batch_size = 64
 num_classes = 10
 epochs = 25
 data_augmentation = True
