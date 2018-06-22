@@ -11,17 +11,20 @@ from tensorflow.python.keras.datasets import cifar10
 import time
 
 batch_size = 32
-num_classes = 1000
+num_classes = 10
 epochs = 2
 data_augmentation = True
-num_predictions = 200
-num_gpus=2
+num_predictions = 20
+num_gpus=8
 
 # The data, split between train and test sets:
-#filenames =
-dataSet = tf.data.TFRecordDataset(filenames="",num_parallel_reads=32)
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+print('')
+print('x_train shape:', x_train.shape)
+print(x_train.shape[0], 'train samples')
+print(x_test.shape[0], 'test samples')
+print('')
 
-'''
 # Convert class vectors to binary class matrices.
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
@@ -32,9 +35,28 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 # Otherwise they may end up hosted on a GPU, which would
 # complicate weight sharing.
 with tf.device('/cpu:0'):
-    model = keras.applications.ResNet50(weights=None,
-                                        input_shape=x_train.shape[1:],
-                                        classes=num_classes)
+    model = keras.Sequential()
+    model.add(keras.layers.Conv2D(32, (3, 3), padding='same',
+                     input_shape=x_train.shape[1:]))
+    model.add(keras.layers.Activation('relu'))
+    model.add(keras.layers.Conv2D(32, (3, 3)))
+    model.add(keras.layers.Activation('relu'))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(keras.layers.Dropout(0.25))
+
+    model.add(keras.layers.Conv2D(64, (3, 3), padding='same'))
+    model.add(keras.layers.Activation('relu'))
+    model.add(keras.layers.Conv2D(64, (3, 3)))
+    model.add(keras.layers.Activation('relu'))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(keras.layers.Dropout(0.25))
+
+    model.add(keras.layers.Flatten())
+    model.add(keras.layers.Dense(512))
+    model.add(keras.layers.Activation('relu'))
+    model.add(keras.layers.Dropout(0.5))
+    model.add(keras.layers.Dense(num_classes))
+    model.add(keras.layers.Activation('softmax'))
 
 # initiate RMSprop optimizer
 opt = keras.optimizers.RMSprop(lr=0.0001, decay=1e-6)
@@ -99,4 +121,3 @@ print('Test loss:', scores[0])
 print('Test accuracy:', scores[1])
 print('Images/sec:', images_sec)
 print('')
-```
