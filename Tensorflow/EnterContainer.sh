@@ -13,5 +13,5 @@ nvidia-docker run --shm-size=1g \
   --rm -it \
   -v $workspace_mount:/workspace \
   -v $data_mount:/Data \
-  -v $keras_data_mount:/root \
+  -v $keras_data_mount:/root/.keras \
   $docker_repo:$docker_tag
