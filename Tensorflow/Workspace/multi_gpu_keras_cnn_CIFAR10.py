@@ -15,7 +15,7 @@ num_classes = 10
 epochs = 2
 data_augmentation = True
 num_predictions = 20
-num_gpus=8
+num_gpus = 8
 
 # The data, split between train and test sets:
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
