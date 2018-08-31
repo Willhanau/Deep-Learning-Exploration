@@ -1,6 +1,6 @@
 #setup for cuda 9.0, cuDNN 7.0.5, tensorflow 1.8; 5-21-2018
 FROM nvidia/cuda:9.0-runtime-ubuntu16.04
-LABEL maintainer="Will Hanau <will.hanau@cirrascale.com>"
+LABEL maintainer="Will Hanau"
 
 ENV CUDNN_VERSION=7.0.5.15
 
