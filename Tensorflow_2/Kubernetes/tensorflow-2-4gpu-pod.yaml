@@ -1,0 +1,23 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: tensorflow-2-4gpu-pod
+spec:
+  restartPolicy: OnFailure
+  hostNetwork: true
+  containers:
+  - name: tensorflow-2-4gpu-pod
+    image: tensorflow/tensorflow:2.0.0-gpu-py3
+    command: ["sleep","infinity"]
+    resources:
+      limits:
+        nvidia.com/gpu: 4
+        cpu: 8
+        memory: "64Gi"
+    volumeMounts:
+      - mountPath: "/local-storage"
+        name: local-storage
+  volumes:
+    - name: local-storage
+      persistentVolumeClaim:
+        claimName: local-storage-pvc

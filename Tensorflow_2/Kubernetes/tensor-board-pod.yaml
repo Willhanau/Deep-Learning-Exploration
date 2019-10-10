@@ -1,0 +1,19 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: tensor-board-pod
+spec:
+  restartPolicy: OnFailure
+  hostNetwork: true
+  containers:
+  - name: tensor-board-pod
+    image: tensorflow/tensorflow:2.0.0-py3
+    #command: ["sleep","infinity"]
+    command: ["tensorboard", "--host", "0.0.0.0", "--port", "6006", "--logdir", "/local-storage/"]
+    volumeMounts:
+      - mountPath: "/local-storage"
+        name: local-storage
+  volumes:
+    - name: local-storage
+      persistentVolumeClaim:
+        claimName: local-storage-pvc

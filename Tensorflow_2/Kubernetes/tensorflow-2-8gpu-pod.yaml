@@ -1,0 +1,23 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: tensorflow-2-8gpu-pod
+spec:
+  restartPolicy: OnFailure
+  hostNetwork: true
+  containers:
+  - name: tensorflow-2-8gpu-pod
+    image: tensorflow/tensorflow:2.0.0-gpu-py3
+    command: ["sleep","infinity"]
+    resources:
+      limits:
+        nvidia.com/gpu: 8
+        cpu: 16
+        memory: "128Gi"
+    volumeMounts:
+      - mountPath: "/local-storage"
+        name: local-storage
+  volumes:
+    - name: local-storage
+      persistentVolumeClaim:
+        claimName: local-storage-pvc
